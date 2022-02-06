@@ -173,81 +173,81 @@ class Pawn(Piece):
         
         return move_set
     
-    class Rook(Piece):
+class Rook(Piece):
 
-        def __init__(self,color,y,x):
-            super().__init__(color,y,x)
-            self.spirite = pygame.image.load("assets/{}rook.png".format(self.color))
-            self.symbol = "R"
-            self.image.blit(self.spirite,(0,0))
-            self.moved = False
+    def __init__(self,color,y,x):
+        super().__init__(color,y,x)
+        self.spirite = pygame.image.load("assets/{}rook.png".format(self.color))
+        self.symbol = "R"
+        self.image.blit(self.spirite,(0,0))
+        self.moved = False
 
-        def gen_legal_moves(self, board):
-            return self.line_attack_gen(board)
+    def gen_legal_moves(self, board):
+        return self.line_attack_gen(board)
 
-    class Bishop(Piece):
+class Bishop(Piece):
 
-        def __init__(self,color,y,x):
-            super().__init__(color,y,x)
-            self.spirite = pygame.image.load("assets/{}bishop.png".format(self.color))
-            self.symbol = "B"
-            self.image.blit(self.spirite,(0,0))
+    def __init__(self,color,y,x):
+        super().__init__(color,y,x)
+        self.spirite = pygame.image.load("assets/{}bishop.png".format(self.color))
+        self.symbol = "B"
+        self.image.blit(self.spirite,(0,0))
 
-        def gen_legal_moves(self,board):
-            return self.diag_attack_gen(board)
+    def gen_legal_moves(self,board):
+        return self.diag_attack_gen(board)
 
-    class Knight(Piece):
+class Knight(Piece):
 
-        def __init__(self, color, y, x):
-            super().__init__(color, y, x)
-            self.spirite = pygame.image.load("assets/{}knight.png".format(self,color))
-            self.symbol = "N"
-            self.image.blit(self.spirite,(0,0))
+    def __init__(self, color, y, x):
+        super().__init__(color, y, x)
+        self.spirite = pygame.image.load("assets/{}knight.png".format(self,color))
+        self.symbol = "N"
+        self.image.blit(self.spirite,(0,0))
 
-        def gen_legal_moves(self,board):
-            move_set = set()
-            offsets = [(-1,-2),(-1,2),(-2,-1),(-2,1),(1,-2),(1,2),(2,-1),(2,1)]
-            for offset in offsets:
-                newX = self.x + offset[0]
-                newY = self.y +offset[1]
+    def gen_legal_moves(self,board):
+        move_set = set()
+        offsets = [(-1,-2),(-1,2),(-2,-1),(-2,1),(1,-2),(1,2),(2,-1),(2,1)]
+        for offset in offsets:
+            newX = self.x + offset[0]
+            newY = self.y +offset[1]
 
-                if move_check(self.color,newY,newX,board):
-                    move_set.add((newY,newX))
+            if move_check(self.color,newY,newX,board):
+                move_set.add((newY,newX))
 
-            return move_set
+        return move_set
 
-    class King(Piece):
+class King(Piece):
 
-        def __init__(self, color, y, x):
-            super().__init__(color, y, x)
-            self.spirite = pygame.image.load("assets/{}king.png".format(self.color))
-            self.symbol = "K"
-            self.image.blit(self.spirite,(0,0))
-            self.moved = False
+    def __init__(self, color, y, x):
+        super().__init__(color, y, x)
+        self.spirite = pygame.image.load("assets/{}king.png".format(self.color))
+        self.symbol = "K"
+        self.image.blit(self.spirite,(0,0))
+        self.moved = False
 
-        def gen_legal_moves(self,board):
-            move_set = set()
-            offsets = [(1, 1), (-1, -1), (1, -1), (-1, 1),(0, 1), (1, 0), (-1, 0), (0, -1)]
+    def gen_legal_moves(self,board):
+        move_set = set()
+        offsets = [(1, 1), (-1, -1), (1, -1), (-1, 1),(0, 1), (1, 0), (-1, 0), (0, -1)]
+        
+        for offset in offsets:
+            newX = self.x + offsets[0]
+            newY = self.y + offsets[1]
+
+            if move_check(self.color,newY,newX,board):
+                move_set.add((newY,newX))
             
-            for offset in offsets:
-                newX = self.x + offsets[0]
-                newY = self.y + offsets[1]
+        return move_set
 
-                if move_check(self.color,newY,newX,board):
-                    move_set.add((newY,newX))
-                
-            return move_set
-    
-    class Queen(Piece):
+class Queen(Piece):
 
-        def __init__(self, color, y, x):
-            super().__init__(color, y, x)
-            self.spirite = pygame.image.load("assets/{}queen.png".format(self.color))
-            self.symbol = "Q"
-            self.image.blit(self.spirite,(0,0))
-            
-        def gen_legal_moves(self,board):
-            move_set1 = self.diag_attack_gen(board)
-            move_set2 = self.line_attack_gen(board)
+    def __init__(self, color, y, x):
+        super().__init__(color, y, x)
+        self.spirite = pygame.image.load("assets/{}queen.png".format(self.color))
+        self.symbol = "Q"
+        self.image.blit(self.spirite,(0,0))
+        
+    def gen_legal_moves(self,board):
+        move_set1 = self.diag_attack_gen(board)
+        move_set2 = self.line_attack_gen(board)
 
-            return move_set1.union(move_set2)
+        return move_set1.union(move_set2)
